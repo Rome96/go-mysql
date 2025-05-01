@@ -17,7 +17,7 @@ func Connect() (*sql.DB, error) {
 	}
 
 	// dns := "username:password@protocol(address)/dbname?param=value" // change value
-	// return strint format
+	// return string format
 	dns := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),

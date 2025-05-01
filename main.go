@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-mysql/controllers"
 	"go-mysql/database"
 	"log"
 
@@ -15,6 +16,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	controllers.ListContact(db)
 
 	defer db.Close() // se ejecuta de ultimo con defer
 
