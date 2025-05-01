@@ -1,29 +1,21 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
+	"go-mysql/database"
 	"log"
-	"time"
 
 	_ "github.com/go-sql-driver/mysql" // el _ se le dice que se usara el paquete de forma indirecta
 )
 
 func main() {
-	dns := "username:password@protocol(address)/dbname?param=value" // change value
 
-	db, err := sql.Open("mysql", dns)
+	//conncetion to DB
+	db, err := database.Connect()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if err := db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-	db.SetConnMaxLifetime(time.Minute * 3)
-	db.SetMaxOpenConns(10)
-	db.SetMaxIdleConns(10)
+	defer db.Close() // se ejecuta de ultimo con defer
 
-	fmt.Println("DB Connections Success")
 }

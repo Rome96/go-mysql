@@ -1,0 +1,25 @@
+# Ejecutables de Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Archivos de compilación
+*.test
+*.out
+
+# Carpetas comunes de herramientas
+bin/
+vendor/
+
+# Archivos del entorno de desarrollo
+.idea/
+.vscode/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración del entorno
+.env

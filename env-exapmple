@@ -1,0 +1,5 @@
+DB_NAME = db_example
+DB_USER = user
+DB_PASSWORD = password
+DB_HOST = localhost
+DB_PORT = 3306
