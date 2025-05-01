@@ -24,13 +24,25 @@ func ListContact(db *sql.DB) {
 	fmt.Println("\nLIST CONTACTS:")
 	fmt.Println("---------------------------------------------------------------")
 
+	//contac.Next() se usa para moverse a la siguiente fila en los resultados de la consulta.
 	for contac.Next() {
 		//Instance of the contact model
 		model_contact := models.Contact{}
 
-		err := contac.Scan(&model_contact.Id, &model_contact.Name, &model_contact.Email, &model_contact.Phone)
+		//validate nulls
+		var valueEmails sql.NullString
+
+		//Scan llena el model_contact con los datos de la fila actual.
+		err := contac.Scan(&model_contact.Id, &model_contact.Name, &valueEmails, &model_contact.Phone)
 		if err != nil {
 			log.Fatal(err)
+		}
+
+		//validate nulls - return bool
+		if valueEmails.Valid {
+			model_contact.Email = valueEmails.String
+		} else {
+			model_contact.Email = "Not email"
 		}
 
 		fmt.Printf("ID: %d, Nombre: %s, Email: %s, Phone: %s\n",
