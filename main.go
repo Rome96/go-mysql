@@ -3,7 +3,6 @@ package main
 import (
 	"go-mysql/controllers"
 	"go-mysql/database"
-	"go-mysql/models"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql" // el _ se le dice que se usara el paquete de forma indirecta
@@ -17,12 +16,12 @@ func main() {
 	// 	Phone: "4444",
 	// }
 
-	update_contact := models.Contact{
-		Id:    8,
-		Name:  "juanchito",
-		Email: "juanchito@gmail.com",
-		Phone: "302884884",
-	}
+	// update_contact := models.Contact{
+	// 	Id:    8,
+	// 	Name:  "juanchito",
+	// 	Email: "juanchito@gmail.com",
+	// 	Phone: "302884884",
+	// }
 
 	//conncetion to DB
 	db, err := database.Connect()
@@ -32,9 +31,10 @@ func main() {
 	}
 
 	controllers.ListContact(db)
-	controllers.GetContactById(db, 3)
+	// controllers.GetContactById(db, 3)
 	// controllers.CrearContact(db, new_contact)
-	controllers.UpdateContact(db, update_contact)
+	// controllers.UpdateContact(db, update_contact)
+	// controllers.DeleteContact(db, 7)
 
 	defer db.Close() // se ejecuta de ultimo con defer
 

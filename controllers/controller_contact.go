@@ -99,8 +99,20 @@ func UpdateContact(db *sql.DB, contact models.Contact) {
 	_, err := db.Exec(query, contact.Name, contact.Email, contact.Phone, contact.Id)
 
 	if err != nil {
-		log.Fatalf("Create contact: %v", err)
+		log.Fatalf("Update contact: %v", err)
 	}
 
 	fmt.Printf("Updated Contact success: %v\n", contact)
+}
+
+// DELETE USER
+func DeleteContact(db *sql.DB, contactID int) {
+	query := "DELETE FROM contact WHERE id = ?"
+	_, err := db.Exec(query, contactID)
+
+	if err != nil {
+		log.Fatalf("Detele contact: %v", err)
+	}
+	fmt.Printf("Delete Contact  ID success: %v\n", contactID)
+
 }
