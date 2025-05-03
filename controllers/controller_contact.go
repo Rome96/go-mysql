@@ -54,6 +54,7 @@ func ListContact(db *sql.DB) {
 	defer contac.Close() // This line runs last, thanks to defer
 }
 
+// GET CONTACT BY ID
 func GetContactById(db *sql.DB, contactID int) {
 	query := "SELECT * FROM contact WHERE id = ?"
 	row := db.QueryRow(query, contactID)
@@ -73,4 +74,33 @@ func GetContactById(db *sql.DB, contactID int) {
 	fmt.Printf("ID: %d, Nombre: %s, Email: %s, Phone: %s\n",
 		model_contact.Id, model_contact.Name, model_contact.Email, model_contact.Phone)
 	fmt.Println("----------------------------------------------------------------")
+}
+
+// CrearContact adds the specified contac to the database,
+// returning the contact ID of the new entry
+func CrearContact(db *sql.DB, contact models.Contact) {
+	query := "INSERT INTO contact (name, email, phone) VALUES (?, ?, ?)"
+	result, err := db.Exec(query, contact.Name, contact.Email, contact.Phone)
+
+	if err != nil {
+		log.Fatalf("Create contact: %v", err)
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		log.Fatalf("Create contact: %v", err)
+	}
+
+	fmt.Printf("ID of added Contact: %v\n", id)
+}
+
+// UPDATE CONTACT
+func UpdateContact(db *sql.DB, contact models.Contact) {
+	query := "UPDATE contact SET name = ?, email = ?, phone = ? WHERE id = ?"
+	_, err := db.Exec(query, contact.Name, contact.Email, contact.Phone, contact.Id)
+
+	if err != nil {
+		log.Fatalf("Create contact: %v", err)
+	}
+
+	fmt.Printf("Updated Contact success: %v\n", contact)
 }
