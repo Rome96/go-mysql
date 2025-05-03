@@ -18,6 +18,7 @@ func main() {
 	}
 
 	controllers.ListContact(db)
+	controllers.GetContactById(db, 3)
 
 	defer db.Close() // se ejecuta de ultimo con defer
 

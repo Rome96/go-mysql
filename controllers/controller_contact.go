@@ -52,5 +52,25 @@ func ListContact(db *sql.DB) {
 	}
 
 	defer contac.Close() // This line runs last, thanks to defer
+}
 
+func GetContactById(db *sql.DB, contactID int) {
+	query := "SELECT * FROM contact WHERE id = ?"
+	row := db.QueryRow(query, contactID)
+	model_contact := models.Contact{}
+	var valueEmails sql.NullString
+
+	err := row.Scan(&model_contact.Id, &model_contact.Name, &valueEmails, &model_contact.Phone)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Fatalf("Not found contact ID -> %d", contactID)
+		}
+		log.Fatal(err)
+	}
+
+	fmt.Println("\nLIST OF A CONTACT:")
+	fmt.Println("---------------------------------------------------------------")
+	fmt.Printf("ID: %d, Nombre: %s, Email: %s, Phone: %s\n",
+		model_contact.Id, model_contact.Name, model_contact.Email, model_contact.Phone)
+	fmt.Println("----------------------------------------------------------------")
 }
